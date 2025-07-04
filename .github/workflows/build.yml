@@ -31,7 +31,7 @@ jobs:
 
     - name: build docker image
       run: |
-        docker build -t equal-experts-gist-api:"${version}" .
+        docker build -t equal-experts-gist-api:${version} .
         docker images | grep equal-experts-gist-api
 
     - name: Vulnerability scan docker image
