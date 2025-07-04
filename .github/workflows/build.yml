@@ -50,7 +50,7 @@ jobs:
         pip install -r requirements.txt
         python3 test_app.py
         coverage run --source=app -m unittest discover
-        coverage report -m
+        coverage report -m --fail-under=90
         
      
         
