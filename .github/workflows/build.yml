@@ -17,9 +17,9 @@ jobs:
       id: vars
       run: |
         if [[ "$GITHUB_REF" == "refs/heads/main" ]]; then
-          echo "version=latest" >> $GITHUB_OUTPUT
+          echo "version=latest" >> $GITHUB_ENV
         elif [[ $GITHUB_REF = refs/tags/* ]]; then
-          echo "version=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_OUTPUT
+          echo "version=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_ENV
         else
           exit 1
         fi
