@@ -45,7 +45,6 @@ jobs:
 
     #     trivy image --severity CRITICAL,HIGH equal-experts-gist-api:"${version}"
 
-
     - name: Unittest 
       run: |
         pip install -r requirements.txt
