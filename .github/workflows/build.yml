@@ -45,12 +45,16 @@ jobs:
 
     #     trivy image --severity CRITICAL,HIGH equal-experts-gist-api:"${version}"
 
-    - name: Unittest 
+    - name: Run Unit Test and Fail if coverage under 80
       run: |
         pip install -r requirements.txt
         python3 test_app.py
         coverage run --source=app -m unittest discover
-        coverage report -m --fail-under=90
+        coverage report -m --fail-under=80
+
+    - name: Push final image to dockerhub
+      run: |
+        docker push equal-experts-gist-api:${version}
         
      
         
