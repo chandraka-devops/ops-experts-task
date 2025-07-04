@@ -1,0 +1,23 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  buildtestandpush:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install requirements
+      run: |
+        pwd
+        ls -lrt
+        docker --version
+        python3 --version
+        
+     
+        
