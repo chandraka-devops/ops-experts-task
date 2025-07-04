@@ -31,15 +31,18 @@ jobs:
 
     - name: build docker image
       run: |
+        echo "version is ${version}"
         docker build -t equal-experts-gist-api:${version} .
         docker images | grep equal-experts-gist-api
 
     - name: Vulnerability scan docker image
       run: |
-        sudo apt install wget
-        wget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_0.49.1_Linux-64bit.tar.gz
-        tar -xzf trivy_0.49.1_Linux-64bit.tar.gz
-        sudo mv trivy /usr/local/bin/
+        sudo apt-get install wget apt-transport-https gnupg lsb-release
+        wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+        echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+        sudo apt-get update
+        sudo apt-get install trivy
+
         trivy image --severity CRITICAL,HIGH equal-experts-gist-api:"${version}"
         
         
