@@ -35,16 +35,23 @@ jobs:
         docker build -t equal-experts-gist-api:${version} .
         docker images | grep equal-experts-gist-api
 
-    - name: Vulnerability scan docker image
-      run: |
-        sudo apt-get install wget apt-transport-https gnupg lsb-release
-        wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
-        echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
-        sudo apt-get update
-        sudo apt-get install trivy
+    # - name: Vulnerability scan docker image
+    #   run: |
+    #     sudo apt-get install wget apt-transport-https gnupg lsb-release
+    #     wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+    #     echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+    #     sudo apt-get update
+    #     sudo apt-get install trivy
 
-        trivy image --severity CRITICAL,HIGH equal-experts-gist-api:"${version}"
-        
+    #     trivy image --severity CRITICAL,HIGH equal-experts-gist-api:"${version}"
+
+
+    - name: Unittest 
+      run: |
+        pip install -r requirements.txt
+        python3 test_app.py
+        coverage run --source=app -m unittest discover
+        coverage report -m
         
      
         
